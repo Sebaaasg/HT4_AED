@@ -1,60 +1,68 @@
 package Test;
 
-import Stack.*;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import Stack.IStack;
+import Stack.StackList;
 
+import org.junit.jupiter.api.Test;
+import java.util.NoSuchElementException;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Pruebas unitarias para la implementación de Stack basada en listas.
+ */
 public class StackTest {
 
-    // Se prueba que el StackArrayList funcione como Pila
+    /**
+     * Prueba funcionamiento básico push y pop.
+     */
     @Test
-    public void testStackArrayList() {
-        IStack<Integer> stack = new StackArrayList<>();
-        testStandardStackBehavior(stack);
-    }
+    public void testPushPop() {
 
-    // Se Prueba que el StackVector funcione como Pila
-    @Test
-    public void testStackVector() {
-        IStack<Integer> stack = new StackVector<>();
-        testStandardStackBehavior(stack);
-    }
+        IStack<Integer> stack = new StackList<Integer>("singly");
 
-    // Se prueba que el StackList funcione como Pila
-    @Test
-    public void testStackListSimple() {
-        // "1" indica lista simple
-        IStack<Integer> stack = new StackList<>("1");
-        testStandardStackBehavior(stack);
-    }
-
-    // 4. Probamos que el StackList (con lista doble) funcione como Pila
-    @Test
-    public void testStackListDouble() {
-        // "2" indica lista doble
-        IStack<Integer> stack = new StackList<>("2");
-        testStandardStackBehavior(stack);
-    }
-
-    // Método auxiliar para no repetir código de prueba
-    private void testStandardStackBehavior(IStack<Integer> stack) {
-        // Debe iniciar vacía
-        assertTrue("La pila nueva debe estar vacía", stack.isEmpty());
-        assertEquals(0, stack.size());
-
-        // Push
+        stack.push(5);
         stack.push(10);
-        stack.push(20);
-        stack.push(30);
 
-        // Verificar tamaño
-        assertEquals(3, stack.size());
-        
-
-        // Pop
-        Integer val = stack.pop();
-        assertEquals(Integer.valueOf(30), val);
-        assertEquals(Integer.valueOf(20), stack.peek()); // Ahora el tope es 20
         assertEquals(2, stack.size());
+        assertEquals(10, stack.pop());
+        assertEquals(5, stack.pop());
+        assertTrue(stack.isEmpty());
+    }
+
+    /**
+     * Verifica que peek retorne el elemento correcto sin removerlo.
+     */
+    @Test
+    public void testPeek() {
+
+        IStack<Integer> stack = new StackList<Integer>("doubly");
+
+        stack.push(100);
+
+        assertEquals(100, stack.peek());
+        assertEquals(1, stack.size());
+    }
+
+    /**
+     * Verifica que se lance excepción al hacer pop en stack vacío.
+     */
+    @Test
+    public void testPopEmptyStack() {
+
+        IStack<Integer> stack = new StackList<Integer>("singly");
+
+        assertThrows(NoSuchElementException.class, stack::pop);
+    }
+
+    /**
+     * Verifica que se lance excepción si el tipo de lista es inválido.
+     */
+    @Test
+    public void testInvalidListType() {
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            new StackList<Integer>("invalid");
+        });
     }
 }
