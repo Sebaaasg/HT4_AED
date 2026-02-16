@@ -1,62 +1,73 @@
 package List;
 
+import java.util.NoSuchElementException;
+
 public class DoublyLinkedList<T> extends AbstractList<T> {
 
-    // Nodo Doble (Tiene Anterior y Siguiente)
-    public class DoubleNode {
-        T data;
-        DoubleNode next;
-        DoubleNode prev;
+    private DoubleNode<T> head;
+    private DoubleNode<T> tail;
 
-        DoubleNode(T data) {
+    private class DoubleNode<E> {
+        E data;
+        DoubleNode<E> next;
+        DoubleNode<E> prev;
+
+        DoubleNode(E data) {
             this.data = data;
-            this.next = null;
-            this.prev = null;
         }
     }
 
-    private DoubleNode head; // Solo se necesita el head para esta implementación
-
     public DoublyLinkedList() {
-        this.head = null;
+        super();
+        head = null;
+        tail = null;
     }
 
     @Override
-    public void addFirst(T item) {
-        DoubleNode newNode = new DoubleNode(item);
-        
-        // Si ya hay algo en la lista, se conecta el actual head con el nuevo
-        if (head != null) {
-            newNode.next = head; // El nuevo mira al viejo head
-            head.prev = newNode; // El viejo head mira atrás al nuevo
+    public void addFirst(T value) {
+
+        if (value == null) {
+            throw new IllegalArgumentException("Null values are not allowed");
         }
-        // El nuevo pasa a ser el jefe
-        head = newNode;
-        size++;
+
+        DoubleNode<T> newNode = new DoubleNode<>(value);
+
+        if (isEmpty()) {
+            head = tail = newNode;
+        } else {
+            newNode.next = head;
+            head.prev = newNode;
+            head = newNode;
+        }
+
+        count++;
     }
 
     @Override
     public T removeFirst() {
-        if (isEmpty()) return null;
-
-        T data = head.data;
-        
-        // Si solo hay un elemento
-        if (head.next == null) {
-            head = null;
-        } else {
-            // Si hay más, se mueve el head al siguiente
-            head = head.next;
-            head.prev = null; // El nuevo head ya no tiene nadie atrás
+        if (isEmpty()) {
+            throw new NoSuchElementException("Cannot remove from an empty list");
         }
-        
-        size--;
-        return data;
+
+        T value = head.data;
+
+        if (head == tail) {
+            head = tail = null;
+        } else {
+            head = head.next;
+            head.prev = null;
+        }
+
+        count--;
+        return value;
     }
 
     @Override
     public T getFirst() {
-        if (isEmpty()) return null;
+        if (isEmpty()) {
+            throw new NoSuchElementException("List is empty");
+        }
+
         return head.data;
     }
 }
