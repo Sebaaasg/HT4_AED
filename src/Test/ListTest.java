@@ -1,43 +1,72 @@
 package Test;
 
+import List.IList;
 import List.SinglyLinkedList;
 import List.DoublyLinkedList;
-import List.IList;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
+import org.junit.jupiter.api.Test;
+import java.util.NoSuchElementException;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * Pruebas unitarias para las implementaciones de listas.
+ */
 public class ListTest {
 
+    /**
+     * Prueba inserción y eliminación en lista simplemente enlazada.
+     */
     @Test
-    public void testSinglyLinkedListOperations() {
-        IList<String> list = new SinglyLinkedList<>();
-        
-        assertTrue("La lista nueva debe estar vacía", list.isEmpty());
-        
-        list.addFirst("A");
-        list.addFirst("B");
-        
-        assertEquals("El tamaño debe ser 2", 2, list.size());
-        assertEquals("LIFO: El primero debe ser B", "B", list.getFirst());
-        
-        String removed = list.removeFirst();
-        assertEquals("Se debió remover B", "B", removed);
-        assertEquals("Ahora el primero debe ser A", "A", list.getFirst());
-    }
+    public void testSinglyAddAndRemove() {
 
-    @Test
-    public void testDoublyLinkedListOperations() {
-        IList<Integer> list = new DoublyLinkedList<>();
-        
+        IList<Integer> list = new SinglyLinkedList<>();
+
         list.addFirst(10);
         list.addFirst(20);
-        list.addFirst(30);
-        
-        assertEquals("El tamaño debe ser 3", 3, list.size());
-        
-        Integer val = list.removeFirst();
-        assertEquals("Se debió sacar el 30", Integer.valueOf(30), val);
-        
-        assertEquals("Ahora el tamaño es 2", 2, list.size());
+
+        assertEquals(2, list.size());
+        assertEquals(20, list.removeFirst());
+        assertEquals(10, list.removeFirst());
+        assertTrue(list.isEmpty());
+    }
+
+    /**
+     * Prueba inserción y eliminación en lista doblemente enlazada.
+     */
+    @Test
+    public void testDoublyAddAndRemove() {
+
+        IList<Integer> list = new DoublyLinkedList<>();
+
+        list.addFirst(1);
+        list.addFirst(2);
+
+        assertEquals(2, list.size());
+        assertEquals(2, list.removeFirst());
+        assertEquals(1, list.removeFirst());
+        assertTrue(list.isEmpty());
+    }
+
+    /**
+     * Verifica que se lance excepción al eliminar de lista vacía.
+     */
+    @Test
+    public void testRemoveFromEmptyList() {
+
+        IList<Integer> list = new SinglyLinkedList<>();
+
+        assertThrows(NoSuchElementException.class, list::removeFirst);
+    }
+
+    /**
+     * Verifica que no se permitan valores null.
+     */
+    @Test
+    public void testAddNullValue() {
+
+        IList<Integer> list = new SinglyLinkedList<>();
+
+        assertThrows(IllegalArgumentException.class, () -> list.addFirst(null));
     }
 }
