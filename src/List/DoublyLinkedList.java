@@ -3,7 +3,7 @@ package List;
 public class DoublyLinkedList<T> extends AbstractList<T> {
 
     // Nodo Doble (Tiene Anterior y Siguiente)
-    public class DoubleNode {
+    private class DoubleNode {
         T data;
         DoubleNode next;
         DoubleNode prev;
