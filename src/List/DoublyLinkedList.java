@@ -3,10 +3,10 @@ package List;
 public class DoublyLinkedList<T> extends AbstractList<T> {
 
     // Nodo Doble (Tiene Anterior y Siguiente)
-    private static class DoubleNode<T> {
+    public class DoubleNode {
         T data;
-        DoubleNode<T> next;
-        DoubleNode<T> prev;
+        DoubleNode next;
+        DoubleNode prev;
 
         DoubleNode(T data) {
             this.data = data;
@@ -15,7 +15,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         }
     }
 
-    private DoubleNode<T> head; // Solo se necesita el head para esta implementación
+    private DoubleNode head; // Solo se necesita el head para esta implementación
 
     public DoublyLinkedList() {
         this.head = null;
@@ -23,7 +23,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
 
     @Override
     public void addFirst(T item) {
-        DoubleNode<T> newNode = new DoubleNode<>(item);
+        DoubleNode newNode = new DoubleNode(item);
         
         // Si ya hay algo en la lista, se conecta el actual head con el nuevo
         if (head != null) {

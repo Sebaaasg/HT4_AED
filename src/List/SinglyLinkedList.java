@@ -3,9 +3,9 @@ package List;
 public class SinglyLinkedList<T> extends AbstractList<T> {
 
     // Clase interna NODO (Solo vive aquí adentro para evitar la creación innecesaria de archivos)
-    private static class Node<T> {
+    private class Node {
         T data;
-        Node<T> next; // Puntero al siguiente
+        Node next; // Puntero al siguiente
 
         Node(T data) {
             this.data = data;
@@ -13,7 +13,7 @@ public class SinglyLinkedList<T> extends AbstractList<T> {
         }
     }
 
-    private Node<T> head; // Cabeza de la lista
+    private Node head; // Cabeza de la lista
 
     public SinglyLinkedList() {
         this.head = null;
@@ -21,7 +21,7 @@ public class SinglyLinkedList<T> extends AbstractList<T> {
 
     @Override
     public void addFirst(T item) {
-        Node<T> newNode = new Node<>(item);
+        Node newNode = new Node(item);
         // 1. El nuevo nodo apunta al actual head
         newNode.next = head;
         // 2. El head se actualiza al nuevo nodo
