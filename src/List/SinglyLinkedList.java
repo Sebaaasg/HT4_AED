@@ -1,48 +1,57 @@
 package List;
 
+import java.util.NoSuchElementException;
+
 public class SinglyLinkedList<T> extends AbstractList<T> {
 
-    // Clase interna NODO (Solo vive aquí adentro para evitar la creación innecesaria de archivos)
-    private class Node {
-        T data;
-        Node next; // Puntero al siguiente
+    private Node<T> head;
 
-        Node(T data) {
+    private class Node<E> {
+        E data;
+        Node<E> next;
+
+        Node(E data) {
             this.data = data;
             this.next = null;
         }
     }
 
-    private Node head; // Cabeza de la lista
-
     public SinglyLinkedList() {
-        this.head = null;
+        super();
+        head = null;
     }
 
     @Override
-    public void addFirst(T item) {
-        Node newNode = new Node(item);
-        // 1. El nuevo nodo apunta al actual head
+    public void addFirst(T value) {
+
+        if (value == null) {
+            throw new IllegalArgumentException("Null values are not allowed");
+        }
+
+        Node<T> newNode = new Node<>(value);
         newNode.next = head;
-        // 2. El head se actualiza al nuevo nodo
         head = newNode;
-        size++;
+        count++;
     }
 
     @Override
     public T removeFirst() {
-        if (isEmpty()) return null;
+        if (isEmpty()) {
+            throw new NoSuchElementException("Cannot remove from an empty list");
+        }
 
-        T data = head.data;
-        // Movemos el head al siguiente, "olvidando" el primero (Garbage Collector lo borra)
+        T value = head.data;
         head = head.next;
-        size--;
-        return data;
+        count--;
+        return value;
     }
 
     @Override
     public T getFirst() {
-        if (isEmpty()) return null;
+        if (isEmpty()) {
+            throw new NoSuchElementException("List is empty");
+        }
+
         return head.data;
     }
 }
