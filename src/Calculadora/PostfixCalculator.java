@@ -7,18 +7,20 @@ public class PostfixCalculator {
     
     private StackFactory factory;
     private String tipoPila; 
+    private String tipoLista;
 
-    public PostfixCalculator(String tipoPila) {
+    public PostfixCalculator(String tipoPila, String tipoLista) {
         this.factory = new StackFactory();
         this.tipoPila = tipoPila;
+        this.tipoLista = tipoLista;
     }
 
     
     // Convertir de Infix a Postfix
-    // Ejemplo (1+2)*9 -> 1 2 + 9 *
+    // Ejemplo de (1+2)*9 a 1 2 + 9 *
     public String infixToPostfix(String expresion) {
         // Crear una pila para guardar operadores temporalmente
-        IStack<Character> pila = factory.createStack(tipoPila);
+        IStack<Character> pila = factory.createStack(tipoPila, tipoLista);
         String resultado = "";
         
         // Recorrer la expresión letra por letra
@@ -72,7 +74,7 @@ public class PostfixCalculator {
     // Evaluar la expresión Postfix    
     public double evaluatePostfix(String expresion) {
         // Pila para números 
-        IStack<Double> pila = factory.createStack(tipoPila);
+        IStack<Double> pila = factory.createStack(tipoPila, tipoLista);
         
         // Se separa el texto por espacios 
         String[] elementos = expresion.split(" "); 

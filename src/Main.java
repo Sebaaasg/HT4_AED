@@ -18,6 +18,18 @@ public class Main {
         System.out.print("Opción: ");
         
         String tipoStack = scanner.nextLine();
+
+        // Si elige Lista, se le pregunta el subtipo
+        String tipoLista = ""; 
+        if (tipoStack.equals("3")) {
+            System.out.println("\n¿Qué tipo de lista desea usar?");
+            System.out.println("1. Simplemente Encadenada");
+            System.out.println("2. Doblemente Encadenada");
+            System.out.print("Opción de lista: ");
+            tipoLista = scanner.nextLine(); // Se lee "1" o "2"
+        }
+
+
         
         // Validación básica
         if (!tipoStack.equals("1") && !tipoStack.equals("2") && !tipoStack.equals("3")) {
@@ -29,7 +41,7 @@ public class Main {
             String expresion = leerArchivo("datos.txt");
             System.out.println("\nExpresión leída del archivo: " + expresion);
             
-            PostfixCalculator calculadora = new PostfixCalculator(tipoStack);
+            PostfixCalculator calculadora = new PostfixCalculator(tipoStack, tipoLista);
             
             // Convertir
             String postfix = calculadora.infixToPostfix(expresion);

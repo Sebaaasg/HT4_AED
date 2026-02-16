@@ -14,15 +14,14 @@ public class StackFactory {
     // Crea una instancia de pila según el tipo solicitado.
     // @param type El tipo de pila deseada
     // @return Una instancia de IStack
-    public <T> IStack<T> createStack(String type) {
+    public <T> IStack<T> createStack(String type, String listType) {
         switch (type) {
             case ARRAYLIST:
                 return new StackArrayList<>();
             case VECTOR:
                 return new StackVector<>();
             case LIST:
-                // return new StackList<>(); 
-                throw new UnsupportedOperationException("La implementación de Lista aún no está lista.");
+                return new StackList<>(listType); 
             default:
                 return null;
         }
