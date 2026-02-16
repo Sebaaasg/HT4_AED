@@ -7,6 +7,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
     private DoubleNode<T> head;
     private DoubleNode<T> tail;
 
+    // Nodo Doble (Tiene Anterior y Siguiente)
     private class DoubleNode<E> {
         E data;
         DoubleNode<E> next;
